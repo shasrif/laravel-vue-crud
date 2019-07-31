@@ -24,3 +24,7 @@ $cyan: #6cb2eb;
 .content-header {
     padding: 15px 0;
 }
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.router-link-active {
+	color: #fff;
+    background-color: $blue;
+}

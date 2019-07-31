@@ -8,8 +8,34 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import { Form, HasError, AlertError } from 'vform'
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
+window.Form = Form;
+
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
+
+import moment from 'moment'
+
+import VueProgressBar from 'vue-progressbar'
+Vue.use(VueProgressBar, {
+	color: '#bffaf3',
+	failedColor: '#874b4b',
+	thickness: '5px',
+})
+
+import swal from "sweetalert2"
+window.swal = swal;
+const toast = swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
+window.toast = toast;
+
+window.Fire = new Vue();
 
 let routes = [
   { path: '/dashboard', component: require('./components/DashboardComponent').default },
@@ -20,6 +46,14 @@ let routes = [
 const router = new VueRouter({
   routes,
   mode: 'history'
+})
+
+Vue.filter('capText', function(text) {
+	return text.charAt(0).toUpperCase() + text.slice(1);
+})
+
+Vue.filter('viewDate', function(created) {
+	return moment(created).format('DD-MMMM-Y');
 })
 
 /**
