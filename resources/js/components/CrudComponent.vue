@@ -27,7 +27,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="user in users" :key="user.id">
+                <tr v-for="user in users.data" :key="user.id">
                   <td>{{ user.id }}</td>
                   <td>{{ user.name | capText }}</td>
                   <td>{{ user.email }}</td>
@@ -38,16 +38,10 @@
                   </td>
                 </tr>
                 </tbody>
-                <tfoot>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Created</th>
-                  <th>Action</th>
-                </tr>
-                </tfoot>
               </table>
+            </div>
+            <div class="card-footer">
+              <pagination :data="users" @pagination-change-page="getResults"></pagination>
             </div>
             <!-- /.card-body -->
           </div>
@@ -161,7 +155,14 @@
         },
 
         loadUsers() {
-          axios.get("user").then( ({ data }) => ( this.users = data.data ));
+          axios.get("user").then( ({ data }) => ( this.users = data ));
+        },
+
+        getResults(page = 1) {
+          axios.get('user?page=' + page)
+            .then(response => {
+              this.users = response.data;
+            });
         },
 
         updateUser() {

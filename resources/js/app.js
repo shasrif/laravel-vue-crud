@@ -37,11 +37,12 @@ window.toast = toast;
 
 window.Fire = new Vue();
 
+Vue.component('pagination', require('laravel-vue-pagination'));
+
 let routes = [
   { path: '/dashboard', component: require('./components/DashboardComponent').default },
   { path: '/crud', component: require('./components/CrudComponent').default }
 ]
-
 
 const router = new VueRouter({
   routes,
